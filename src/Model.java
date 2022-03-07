@@ -95,7 +95,9 @@ public class Model {
 
     public void sendStatisticsToFile(ArrayList<String> strings){
         try {
+            String title = "|NAME      |WINS      |DRAWS     |LOSES     |\r\n";
             FileOutputStream fileOutputStream = new FileOutputStream("/home/sergey/gamestat.txt");
+            fileOutputStream.write(title.getBytes(StandardCharsets.UTF_8));
             for (int i = 0; i < strings.size(); i++) {
                 fileOutputStream.write(strings.get(i).getBytes(StandardCharsets.UTF_8));
             }
@@ -109,8 +111,6 @@ public class Model {
 
     public ArrayList<String> makeOutputData(HashMap<String,Integer[]> stat){
         ArrayList<String> result = new ArrayList<>();
-        String title = "|NAME      |WINS      |DRAWS     |LOSES     |\r\n";
-        result.add(title);
         for(Map.Entry<String,Integer[]> entry: stat.entrySet()){
             StringBuilder sb = new StringBuilder("|");
             String name = entry.getKey();
@@ -132,6 +132,7 @@ public class Model {
             sb.append("\r\n");
             result.add(sb.toString());
         }
+        Collections.sort(result);
         return result;
     }
 
